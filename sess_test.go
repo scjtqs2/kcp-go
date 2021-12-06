@@ -34,7 +34,7 @@ func dialEcho(port int) (*UDPSession, error) {
 	//block, _ := NewTEABlockCrypt(pass[:16])
 	//block, _ := NewAESBlockCrypt(pass)
 	block, _ := NewSalsa20BlockCrypt(pass)
-	sess, err := DialWithOptions(fmt.Sprintf("127.0.0.1:%v", port), block, 10, 3)
+	sess, err := DialWithOptions(fmt.Sprintf("127.0.0.1:%v", port), block, 10, 3, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -57,7 +57,7 @@ func dialEcho(port int) (*UDPSession, error) {
 }
 
 func dialSink(port int) (*UDPSession, error) {
-	sess, err := DialWithOptions(fmt.Sprintf("127.0.0.1:%v", port), nil, 0, 0)
+	sess, err := DialWithOptions(fmt.Sprintf("127.0.0.1:%v", port), nil, 0, 0, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -80,7 +80,7 @@ func dialTinyBufferEcho(port int) (*UDPSession, error) {
 	//block, _ := NewTEABlockCrypt(pass[:16])
 	//block, _ := NewAESBlockCrypt(pass)
 	block, _ := NewSalsa20BlockCrypt(pass)
-	sess, err := DialWithOptions(fmt.Sprintf("127.0.0.1:%v", port), block, 10, 3)
+	sess, err := DialWithOptions(fmt.Sprintf("127.0.0.1:%v", port), block, 10, 3, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -642,7 +642,7 @@ func TestUDPSessionOwnedPacketConn(t *testing.T) {
 	defer l.Close()
 
 	// DialWithOptions creates its own net.PacketConn.
-	client, err := DialWithOptions(l.Addr().String(), nil, 0, 0)
+	client, err := DialWithOptions(l.Addr().String(), nil, 0, 0, nil)
 	if err != nil {
 		panic(err)
 	}

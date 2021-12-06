@@ -54,7 +54,7 @@ func client() {
 	time.Sleep(time.Second)
 
 	// dial to the echo server
-	if sess, err := kcp.DialWithOptions("127.0.0.1:12345", block, 10, 3); err == nil {
+	if sess, err := kcp.DialWithOptions("127.0.0.1:12345", block, 10, 3,nil); err == nil {
 		for {
 			data := time.Now().String()
 			buf := make([]byte, len(data))
