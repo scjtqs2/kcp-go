@@ -193,6 +193,16 @@ func newUDPSession(conv uint32, dataShards, parityShards int, l *Listener, conn 
 	return sess
 }
 
+// 拿到原始的*net.UdpConn类，用于一些其他用途。例如直接发普通的udp包
+func (s *UDPSession) GetOrignalUDPConn() (*net.UDPConn, error) {
+	conn := s.conn
+	// cast to writebatch conn
+	if udpConn, ok := conn.(*net.UDPConn); ok {
+		return udpConn, nil
+	}
+	return nil, errInvalidOperation
+}
+
 // Read implements net.Conn
 func (s *UDPSession) Read(b []byte) (n int, err error) {
 	for {
